@@ -101,6 +101,7 @@ Filename: "http://docs.hexchat.org/en/latest/changelog.html"; Description: "See 
 Filename: "{tmp}\vcredist.exe"; Parameters: "/install /quiet /norestart"; StatusMsg: "Installing Visual C++ Redistributable"; Flags: skipifdoesntexist; Tasks: not portable
 Filename: "{tmp}\dotnet4.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing .NET"; Components: xtm; Flags: skipifdoesntexist; Tasks: not portable
 Filename: "{tmp}\perl.msi"; StatusMsg: "Installing Perl"; Components: langs\perl; Flags: shellexec skipifdoesntexist; Tasks: not portable
+Filename: "{tmp}\python.msi"; StatusMsg: "Installing Python"; Components: langs\python; Flags: shellexec skipifdoesntexist; Tasks: not portable
 Filename: "{tmp}\python.exe"; Parameters: "InstallAllUsers=1 PrependPath=1"; StatusMsg: "Installing Python"; Components: langs\python; Flags: shellexec skipifdoesntexist; Tasks: not portable
 Filename: "{tmp}\spelling-dicts.exe"; Parameters: "/verysilent"; StatusMsg: "Installing Spelling Dictionaries"; Components: spell; Flags: skipifdoesntexist; Tasks: not portable
 
@@ -270,13 +271,13 @@ begin
 #if APPARCH == "x64"
 		REDIST := 'https://dl.hexchat.net/misc/vcredist_2013_x64.exe';
 		PERL := 'https://dl.hexchat.net/misc/perl/Perl%205.20.0%20x64.msi';
-		PY2 := 'http://python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi';
-		PY3 := 'http://python.org/ftp/python/3.5.0/python-3.5.0-amd64.exe';
+		PY2 := 'http://python.org/ftp/python/2.7.10/python-2.7.10.amd64.msi';
+		PY3 := 'http://python.org/ftp/python/3.5.1/python-3.5.1-amd64.exe';
 #else
 		REDIST := 'https://dl.hexchat.net/misc/vcredist_2013_x86.exe';
 		PERL := 'https://dl.hexchat.net/misc/perl/Perl%205.20.0%20x86.msi';
-		PY2 := 'http://python.org/ftp/python/2.7.8/python-2.7.8.msi';
-		PY3 := 'http://python.org/ftp/python/3.5.0/python-3.5.0.exe';
+		PY2 := 'http://python.org/ftp/python/2.7.10/python-2.7.10.msi';
+		PY3 := 'http://python.org/ftp/python/3.5.1/python-3.5.1.exe';
 #endif
 		DOTNET := 'https://dl.hexchat.net/misc/dotnet_40.exe';
 		SPELL := 'https://dl.hexchat.net/hexchat/HexChat%20Spelling%20Dictionaries%20r2.exe';
@@ -296,7 +297,7 @@ begin
 				idpAddFile(PERL, ExpandConstant('{tmp}\perl.msi'));
 
 			if IsComponentSelected('langs\python\python2') and not CheckDLL('python27.dll') then
-				idpAddFile(PY2, ExpandConstant('{tmp}\python.exe'));
+				idpAddFile(PY2, ExpandConstant('{tmp}\python.msi'));
 
 			if IsComponentSelected('langs\python\python3') and not CheckDLL('python35.dll') then
 				idpAddFile(PY3, ExpandConstant('{tmp}\python.exe'));
